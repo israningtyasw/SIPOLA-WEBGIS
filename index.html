@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SI-POLA v1.0 | Bappeda Kota Medan</title>
+<meta name="description" 
+        content="SI-POLA - Sistem Informasi Peta Online Tata Ruang dan Administrasi Bappeda Kota Medan">
+<link rel="icon"
+      type="image/png"
+      href="assets/logo/logo-sipola.png">
+<link rel="stylesheet" href="css/sipola.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</head>
+<body>
+    <!-- ==========================================
+     LOADING SCREEN
+========================================== -->
+
+<div id="loading-screen">
+
+    <div class="loading-box">
+
+        <img src="assets/logo/logo-bappeda.png"
+             class="loading-logo">
+
+        <h1>SI-POLA</h1>
+
+        <p>
+
+            Sistem Informasi Peta Online<br>
+            Tata Ruang dan Administrasi
+
+        </p>
+
+        <div class="loading-text">
+
+            Memuat Data Spasial Kota Medan...
+
+        </div>
+
+        <div class="loading-bar">
+
+            <div class="loading-progress"></div>
+
+        </div>
+
+        <small>
+
+            Versi 1.0
+
+        </small>
+
+    </div>
+
+</div>
+<div id="app">
+    
+<header id="app-header">
+<div class="header-left">
+<img src="assets/logo/logo-bappeda.png" class="logo" alt="Logo">
+<div><h1>SI-POLA</h1><p>Sistem Informasi Peta Online Tata Ruang dan Administrasi</p></div>
+</div>
+<div class="header-right"><strong>BAPPEDA KOTA MEDAN</strong></div>
+</header>
+<aside id="sidebar">
+<div class="brand">
+<img src="assets/logo/logo-sipola.png" class="sidebar-logo">
+<h2>SI-POLA</h2><small>Versi 1.0</small>
+</div>
+<nav class="nav-group">
+<h4>PETA</h4><button id="btn-map" class="nav-item active"><i class="fa-solid fa-map"></i><span>Peta RTRW</span></button>
+<h4>PENGATURAN PETA</h4>
+
+<button id="btn-layer" class="nav-item">
+    <i class="fa-solid fa-sliders"></i>
+    <span>Pengaturan Peta</span>
+</button>
+<button id="btn-basemap" class="nav-item"><i class="fa-solid fa-earth-asia"></i><span>Basemap</span></button>
+<button id="btn-opacity" class="nav-item"><i class="fa-solid fa-sliders"></i><span>Transparansi</span></button>
+<h4>TOOLS</h4><button id="btn-locate" class="nav-item"><i class="fa-solid fa-location-crosshairs"></i><span>Lokasi Saya</span></button>
+<button id="btn-measure" class="nav-item"><i class="fa-solid fa-ruler-combined"></i><span>Ukur Jarak</span></button>
+<button id="btn-print" class="nav-item"><i class="fa-solid fa-print"></i><span>Cetak Peta</span></button>
+<button id="btn-export" class="nav-item"><i class="fa-solid fa-file-pdf"></i><span>Ekspor PDF</span></button>
+<h4>TENTANG</h4><button id="btn-about" class="nav-item"><i class="fa-solid fa-circle-info"></i><span><span>Tentang SI-POLA</span></span></button>
+</nav></aside>
+<main id="main-content">
+<section id="search-bar"><input id="search-input" autocomplete="off" placeholder="Cari Kecamatan atau Kelurahan..."><div id="search-result"></div></section>
+<section id="map-toolbar">
+<button id="tool-home" class="toolbar-btn"><i class="fa-solid fa-house"></i></button>
+<button id="tool-locate" class="toolbar-btn"><i class="fa-solid fa-location-crosshairs"></i></button>
+<button id="tool-measure" class="toolbar-btn"><i class="fa-solid fa-ruler"></i></button>
+<button id="tool-print" class="toolbar-btn"><i class="fa-solid fa-print"></i></button>
+<button id="tool-export" class="toolbar-btn"><i class="fa-solid fa-file-pdf"></i></button>
+</section>
+<section id="map-container"><iframe id="mapframe" src="map.html"></iframe></section>
+<footer id="status-bar">
+
+    <span id="status-coordinate">
+        <i class="fa-solid fa-location-dot"></i>
+        Koordinat : -
+    </span>
+
+    <span class="status-divider">│</span>
+
+    <span id="status-zoom">
+        <i class="fa-solid fa-magnifying-glass-plus"></i>
+        Zoom : -
+    </span>
+
+    <span class="status-divider">│</span>
+
+    <span id="status-crs">
+        <i class="fa-solid fa-globe"></i>
+        EPSG:4326
+    </span>
+
+    <span class="status-divider">│</span>
+
+    <span id="status-kecamatan">
+        <i class="fa-solid fa-building"></i>
+        21 Kecamatan
+    </span>
+
+    <span class="status-divider">│</span>
+
+    <span id="status-kelurahan">
+        <i class="fa-solid fa-map-location-dot"></i>
+        151 Kelurahan
+    </span>
+
+    <span class="status-divider">│</span>
+
+    <span id="status-rtrw">
+        <i class="fa-solid fa-layer-group"></i>
+        16 Kawasan RTRW
+    </span>
+
+    <span class="status-divider">│</span>
+
+    <span id="status-version">
+        SI-POLA v1.0
+    </span>
+
+</footer>
+</main>
+<aside id="side-panel" class="hidden">
+<div id="panel-header"><h3 id="panel-title">Panel</h3><button id="panel-close">×</button></div>
+<div id="panel-body">Konten panel akan berubah sesuai menu yang dipilih.</div>
+</aside>
+<div id="about-modal" class="hidden-modal">
+
+<div class="modal-content">
+
+<img src="assets/logo/logo-sipola.png" class="about-logo">
+
+<h2>SI-POLA</h2>
+
+<p class="about-subtitle">
+Sistem Informasi Peta Online Tata Ruang dan Administrasi
+</p>
+
+<hr>
+
+<h3>Versi</h3>
+
+<p>1.0</p>
+
+<h3>Pengembang</h3>
+
+<p>
+Bidang Infrastruktur dan Kewilayahan<br>
+Bappeda Kota Medan
+</p>
+
+<h3>Dibangun Menggunakan</h3>
+
+<p>
+QGIS · qgis2web · Leaflet
+</p>
+
+<h3>Sumber Data</h3>
+
+<p>
+RTRW Kota Medan Tahun 2022–2042<br>
+Batas Administrasi Kota Medan
+</p>
+
+<hr>
+
+<p class="about-footer">
+
+© 2026<br>
+
+Bappeda Kota Medan
+
+</p>
+
+<p class="about-footer">
+
+Dikembangkan dalam rangka<br>
+
+Aktualisasi Latsar CPNS<br>
+
+Golongan III Batch 6 Angkatan 22
+
+</p>
+
+<button id="about-close">
+
+Tutup
+
+</button>
+
+</div>
+
+</div>
+</div>
+<!-- ==========================================================
+     FEATURE MODAL
+========================================================== -->
+
+<div id="feature-modal" class="hidden-modal">
+
+<div class="modal-content">
+
+<div class="feature-icon">🚧</div>
+
+<h2 id="feature-title">
+Fitur Belum Tersedia
+</h2>
+
+<p id="feature-message">
+
+Fitur ini belum tersedia pada
+SI-POLA Versi 1.0.
+
+</p>
+
+<p class="about-footer">
+
+Fitur akan dihadirkan pada
+pembaruan versi berikutnya.
+
+</p>
+
+<button id="feature-close">
+
+Tutup
+
+</button>
+
+</div>
+
+</div>
+<script src="js/sipola.js"></script>
+<script>
+window.addEventListener("DOMContentLoaded", () => {
+    Sipola.init();
+});
+</script>
+</body>
+</html>

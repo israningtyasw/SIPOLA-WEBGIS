@@ -1,0 +1,1481 @@
+/* ==========================================================
+   SI-POLA v1.0
+   Sistem Informasi Peta Online Tata Ruang dan Administrasi
+   Bappeda Kota Medan
+
+   Developer  : Bappeda Kota Medan
+   UI Version : 1.0
+========================================================== */
+
+
+/* ==========================================================
+   RESET
+========================================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html,
+body{
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    font-family:"Segoe UI",Tahoma,Geneva,Verdana,sans-serif;
+    background:#f4f7fa;
+    color:#1f2937;
+}
+
+button,
+input{
+    font-family:inherit;
+}
+
+button{
+    cursor:pointer;
+    border:none;
+    outline:none;
+    background:none;
+}
+
+input{
+    outline:none;
+}
+
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+ul{
+    list-style:none;
+}
+
+
+/* ==========================================================
+   ROOT COLOR
+========================================================== */
+
+:root{
+
+    --primary:#0F4C81;
+    --primary-dark:#0b3c64;
+
+    --secondary:#2563eb;
+
+    --background:#f4f7fa;
+
+    --white:#ffffff;
+
+    --border:#d9e2ec;
+
+    --text:#1f2937;
+
+    --text-light:#6b7280;
+
+    --hover:#edf5ff;
+
+    --shadow:
+    0 8px 24px rgba(0,0,0,.08);
+
+    --radius:12px;
+
+}
+
+
+/* ==========================================================
+   APP LAYOUT
+========================================================== */
+
+#app{
+
+    width:100vw;
+    height:100vh;
+
+    display:grid;
+
+    grid-template-columns:
+
+    250px
+
+    1fr
+
+    0px;
+
+    grid-template-rows:
+
+    70px
+
+    1fr;
+
+    grid-template-areas:
+
+    "header header header"
+
+    "sidebar main panel";
+
+}
+
+
+/* ==========================================================
+   HEADER
+========================================================== */
+
+#app-header{
+
+    grid-area:header;
+
+    background:var(--primary);
+
+    color:white;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    padding:0 22px;
+
+    box-shadow:0 3px 10px rgba(0,0,0,.15);
+
+    z-index:1000;
+
+}
+
+
+/* kiri */
+
+.header-left{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+}
+
+.logo{
+
+    width:42px;
+
+    height:42px;
+
+    object-fit:contain;
+
+    background:white;
+
+    border-radius:8px;
+
+    padding:3px;
+
+}
+
+.header-left h1{
+
+    font-size:20px;
+
+    font-weight:700;
+
+    letter-spacing:.5px;
+
+}
+
+.header-left p{
+
+    font-size:13px;
+
+    opacity:.9;
+
+}
+
+
+/* kanan */
+
+.header-right{
+
+    font-size:15px;
+
+    font-weight:600;
+
+    letter-spacing:.3px;
+
+}
+
+
+/* ==========================================================
+   SIDEBAR
+========================================================== */
+
+#sidebar{
+
+    grid-area:sidebar;
+
+    background:white;
+
+    border-right:1px solid var(--border);
+
+    overflow-y:auto;
+
+    overflow-x:hidden;
+
+}
+
+
+/* logo */
+
+.brand{
+
+    padding:24px;
+
+    text-align:center;
+
+    border-bottom:1px solid var(--border);
+
+}
+
+.sidebar-logo{
+
+    width:78px;
+
+    margin-bottom:12px;
+
+}
+
+.brand h2{
+
+    color:var(--primary);
+
+    font-size:18px;
+
+    margin-bottom:4px;
+
+}
+
+.brand small{
+
+    color:var(--text-light);
+
+}
+
+
+/* ==========================================================
+   MENU GROUP
+========================================================== */
+
+.nav-group{
+
+    padding:15px;
+
+}
+
+.nav-group h4{
+
+    margin-top:18px;
+
+    margin-bottom:8px;
+
+    color:#64748b;
+
+    font-size:11px;
+
+    text-transform:uppercase;
+
+    letter-spacing:1px;
+
+}
+
+
+/* ==========================================================
+   MENU ITEM
+========================================================== */
+
+.nav-item{
+
+    width:100%;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    padding:12px 14px;
+
+    border-radius:10px;
+
+    margin-bottom:6px;
+
+    color:var(--text);
+
+    transition:.25s;
+
+    font-size:14px;
+
+}
+
+.nav-item i{
+
+    width:18px;
+
+    text-align:center;
+
+    color:var(--primary);
+
+}
+
+.nav-item:hover{
+
+    background:var(--hover);
+
+}
+
+.nav-item.active{
+
+    background:#dbeafe;
+
+    color:var(--primary);
+
+    font-weight:600;
+
+}
+
+
+/* ==========================================================
+   SIDEBAR SCROLL
+========================================================== */
+
+#sidebar::-webkit-scrollbar{
+
+    width:8px;
+
+}
+
+#sidebar::-webkit-scrollbar-thumb{
+
+    background:#d1d5db;
+
+    border-radius:20px;
+
+}
+
+#sidebar::-webkit-scrollbar-thumb:hover{
+
+    background:#94a3b8;
+
+}
+
+
+/* ==========================================================
+   MAIN
+========================================================== */
+
+#main-content{
+
+    grid-area:main;
+
+    display:flex;
+
+    flex-direction:column;
+
+    padding:18px;
+
+    gap:15px;
+
+    background:var(--background);
+
+    overflow:hidden;
+
+}
+/* ==========================================================
+   SEARCH BAR
+========================================================== */
+
+#search-bar{
+
+    position:relative;
+    z-index:999;
+
+}
+
+#search-input{
+
+    width:100%;
+
+    height:46px;
+
+    border:1px solid var(--border);
+
+    border-radius:12px;
+
+    padding:0 18px;
+
+    background:white;
+
+    font-size:14px;
+
+    box-shadow:var(--shadow);
+
+}
+
+#search-input:focus{
+
+    border-color:var(--secondary);
+
+}
+
+#search-result{
+
+    position:absolute;
+
+    top:52px;
+
+    left:0;
+
+    width:100%;
+
+    background:white;
+
+    border:1px solid var(--border);
+
+    border-radius:12px;
+
+    box-shadow:0 12px 30px rgba(0,0,0,.12);
+
+    max-height:260px;
+
+    overflow-y:auto;
+
+    display:none;
+
+    z-index:9999;
+
+}
+
+.search-item{
+
+    padding:12px 16px;
+
+    cursor:pointer;
+
+    transition:.2s;
+
+    font-size:14px;
+
+}
+
+.search-item:hover{
+
+    background:#edf5ff;
+
+    color:var(--primary);
+
+}
+
+
+/* ==========================================================
+   TOOLBAR
+========================================================== */
+
+#map-toolbar{
+
+    display:flex;
+
+    gap:10px;
+
+}
+
+.toolbar-btn{
+
+    width:40px;
+
+    height:40px;
+
+    border-radius:10px;
+
+    background:white;
+
+    box-shadow:var(--shadow);
+
+    transition:.25s;
+
+}
+
+.toolbar-btn:hover{
+
+    background:var(--primary);
+
+    color:white;
+
+}
+
+
+/* ==========================================================
+   MAP
+========================================================== */
+
+#map-container{
+
+    flex:1;
+
+    background:white;
+
+    border-radius:12px;
+
+    overflow:hidden;
+
+    border:1px solid var(--border);
+
+    box-shadow:var(--shadow);
+
+}
+
+#mapframe{
+
+    width:100%;
+
+    height:100%;
+
+    border:none;
+
+}
+
+
+/* ==========================================================
+   STATUS BAR
+========================================================== */
+
+#status-bar{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    padding:0 16px;
+
+    font-size:13px;
+
+    white-space:nowrap;
+
+    overflow-x:auto;
+
+}
+
+#status-bar span{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:6px;
+
+}
+
+.status-divider{
+
+    color:#cbd5e1;
+
+    font-weight:400;
+
+    user-select:none;
+
+    flex:none;
+
+}
+
+#status-bar i{
+
+    color:var(--primary);
+
+    font-size:12px;
+
+}
+
+
+/* ==========================================================
+   SIDE PANEL
+========================================================== */
+
+#side-panel{
+
+    grid-area:panel;
+
+    width:320px;
+
+    background:white;
+
+    border-left:1px solid var(--border);
+
+    display:flex;
+
+    flex-direction:column;
+
+    transition:.35s;
+
+    overflow:hidden;
+
+}
+
+#side-panel.hidden{
+
+    width:0;
+
+    border:none;
+
+}
+
+#panel-header{
+
+    height:60px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    padding:0 18px;
+
+    border-bottom:1px solid var(--border);
+
+}
+
+#panel-title{
+
+    font-size:17px;
+
+    color:var(--primary);
+
+}
+
+#panel-close{
+
+    font-size:18px;
+
+}
+
+#panel-body{
+
+    flex:1;
+
+    padding:20px;
+
+    overflow:auto;
+
+}
+
+
+/* ==========================================================
+   ABOUT MODAL
+========================================================== */
+
+#about-modal,
+#feature-modal{
+
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(0,0,0,.45);
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    z-index:9999;
+
+}
+
+.modal-content{
+
+    width:420px;
+
+    max-height:80vh;
+
+    overflow-y:auto;
+
+    background:white;
+
+    border-radius:16px;
+
+    padding:28px;
+
+    text-align:center;
+
+    box-shadow:0 25px 60px rgba(0,0,0,.25);
+
+}
+
+.modal-content h2{
+
+    color:var(--primary);
+
+    margin-bottom:15px;
+
+}
+
+.modal-content p{
+
+    margin-bottom:8px;
+    color:#374151;
+    
+
+}
+.about-logo{
+
+    width:60px;
+
+    margin-bottom:10px;
+
+}
+
+.about-subtitle{
+
+    font-size:15px;
+
+    line-height:1.5;
+
+    margin-bottom:16px;
+
+}
+
+.modal-content hr{
+
+    margin:14px 0;
+
+    border:none;
+
+    border-top:1px solid #d9d9d9;
+
+}
+
+.modal-content h3{
+
+    color:#1f2937;
+
+    margin-bottom:4px;
+
+    margin-top:14px;
+
+    font-size:15px;
+
+}
+
+.about-footer{
+
+    color:#666;
+
+    font-size:13px;
+
+    line-height:1.5;
+
+}
+
+#about-close{
+
+    margin-top:20px;
+
+    width:100%;
+
+    height:46px;
+
+    background:var(--primary);
+
+    color:white;
+
+    border:none;
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+    font-size:15px;
+
+    font-weight:600;
+
+}
+
+/* ==========================================================
+   FEATURE MODAL
+========================================================== */
+
+.feature-icon{
+
+    font-size:60px;
+
+    margin-bottom:15px;
+
+}
+
+#feature-title{
+
+    color:var(--primary);
+
+    margin-bottom:15px;
+
+}
+
+#feature-message{
+
+    line-height:1.6;
+
+    margin-bottom:20px;
+
+}
+
+#feature-close{
+
+    margin-top:10px;
+
+    width:100%;
+
+    height:46px;
+
+    background:var(--primary);
+
+    color:white;
+
+    border:none;
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+    font-size:15px;
+
+    font-weight:600;
+
+}
+
+/* ==========================================================
+   RESPONSIVE
+========================================================== */
+
+@media(max-width:1100px){
+
+#app{
+
+grid-template-columns:
+
+220px
+
+1fr;
+
+grid-template-areas:
+
+"header header"
+
+"sidebar main";
+
+}
+
+#side-panel{
+
+display:none;
+
+}
+
+}
+.hidden-modal{
+    display:none !important;
+}
+
+#about-modal.show,
+#feature-modal.show{
+    display:flex !important;
+}
+
+/* ==========================================
+   ABOUT MODAL STATE
+========================================== */
+
+.hidden-modal{
+    display:none !important;
+}
+
+#about-modal.show{
+    display:flex !important;
+}
+/*====================================================
+POPUP PROFESSIONAL
+====================================================*/
+
+.leaflet-popup-content-wrapper{
+
+    padding:0 !important;
+
+    border-radius:14px !important;
+
+    overflow:visible !important;
+
+    background:#ffffff !important;
+
+    box-shadow:0 10px 28px rgba(0,0,0,.22) !important;
+
+}
+
+.leaflet-popup-content{
+    margin:0 !important;
+    width:340px !important;
+    font-family:"Segoe UI",sans-serif;
+    background:#ffffff;
+}
+
+.popup-card{
+    background:#ffffff;
+}
+
+.popup-title{
+
+    background:#0B5EA8;
+
+    color:#fff;
+
+    text-align:center;
+
+    padding:14px;
+
+    font-size:15px;
+
+    font-weight:700;
+
+    letter-spacing:.5px;
+
+}
+
+.popup-body{
+
+    padding:18px;
+
+}
+
+.popup-label{
+
+    color:#7b7b7b;
+
+    font-size:11px;
+
+    text-transform:uppercase;
+
+    margin-top:14px;
+
+    font-weight:600;
+
+}
+
+.popup-value{
+
+    color:#222;
+
+    font-size:15px;
+
+    font-weight:600;
+
+    margin-top:4px;
+
+}
+
+.popup-footer{
+
+    background:#f5f7fa;
+
+    border-top:1px solid #d9d9d9;
+
+    padding:16px 18px;
+
+}
+
+.popup-source-title{
+
+    color:#666;
+
+    font-size:11px;
+
+    font-weight:700;
+
+    text-transform:uppercase;
+
+    margin-bottom:8px;
+
+}
+
+.popup-source{
+
+    font-size:12px;
+
+    line-height:1.6;
+
+    color:#444;
+
+}
+
+.leaflet-popup-close-button{
+
+    color:white !important;
+
+    font-size:18px !important;
+
+    padding:8px 10px !important;
+
+    font-weight:bold;
+
+}
+/* =====================================
+   CLEAN MAP UI
+===================================== */
+
+#map-toolbar{
+    display:none !important;
+}
+/*======================================
+  CLEAN MAP
+======================================*/
+
+.leaflet-control-layers{
+
+    display:none !important;
+
+}
+/*====================================
+SIDEBAR CLEAN
+====================================*/
+
+#btn-basemap{
+
+    display:none !important;
+
+}
+#btn-opacity{
+
+    display:none !important;
+
+}
+/* ==========================================================
+   PANEL PENGATURAN PETA
+========================================================== */
+
+.setting-item{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    width:100%;
+
+    margin-bottom:14px;
+
+    cursor:pointer;
+
+}
+
+.setting-item span{
+
+    flex:1;
+
+    line-height:1.4;
+
+}
+
+.setting-item input{
+
+    width:18px;
+
+    height:18px;
+
+    flex:none;
+
+}
+
+.panel-subtitle{
+
+    margin:0 0 14px;
+
+    font-size:12px;
+
+    font-weight:700;
+
+    color:#6B7280;
+
+    letter-spacing:1px;
+
+}
+
+.panel-divider{
+
+    margin:18px 0;
+
+    border:none;
+
+    border-top:1px solid #E5E7EB;
+
+}
+
+.coming-soon{
+
+    color:#94A3B8;
+
+    font-size:13px;
+
+    font-style:italic;
+
+}
+/* ==========================================
+   SEMBUNYIKAN CONTROL QGIS2WEB
+========================================== */
+
+.leaflet-control-locate{
+    display:none !important;
+}
+/* ==========================================================
+   POPUP PROFESSIONAL
+========================================================== */
+
+.popup-card{
+
+    width:100%;
+
+    font-family:'Segoe UI',sans-serif;
+
+}
+
+.popup-title{
+
+    background:#1d4ed8;
+
+    color:white;
+
+    font-size:16px;
+
+    font-weight:700;
+
+    text-align:center;
+
+    padding:12px;
+
+    border-radius:12px 12px 0 0;
+
+    letter-spacing:.5px;
+
+}
+
+.popup-body{
+
+    padding:16px;
+
+}
+
+.popup-label{
+
+    font-size:12px;
+
+    color:#6b7280;
+
+    margin-top:12px;
+
+    text-transform:uppercase;
+
+    letter-spacing:.6px;
+
+}
+
+.popup-value{
+
+    font-size:15px;
+
+    color:#111827;
+
+    font-weight:600;
+
+    margin-top:3px;
+
+}
+
+.popup-footer{
+
+    border-top:1px solid #e5e7eb;
+
+    margin-top:15px;
+
+    padding:15px;
+
+    background:#f9fafb;
+
+    border-radius:0 0 12px 12px;
+
+}
+
+.popup-source-title{
+
+    font-size:12px;
+
+    color:#6b7280;
+
+    text-transform:uppercase;
+
+    margin-bottom:6px;
+
+    font-weight:700;
+
+}
+
+.popup-source{
+
+    font-size:13px;
+
+    color:#374151;
+
+    line-height:1.5;
+
+}
+.leaflet-popup-content{
+
+    margin:0 !important;
+
+}
+
+.leaflet-popup-content-wrapper{
+
+    border-radius:14px;
+
+    overflow:hidden;
+
+    padding:0;
+
+}
+
+.leaflet-popup-tip{
+
+    background:white;
+
+}
+/* ======================================
+   RTRW LEGEND
+====================================== */
+
+.rtrw-item{
+
+    display:flex;
+
+    align-items:center;
+
+    margin:6px 0;
+
+}
+
+.rtrw-label{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:6px;
+
+}
+.legend-text{
+
+    white-space:normal;
+
+    line-height:1.25;
+
+}
+
+.legend-color{
+
+    display:block !important;
+
+    flex:0 0 12px !important;
+
+    width:12px !important;
+
+    height:12px !important;
+
+    min-width:12px !important;
+
+    max-width:12px !important;
+
+    background:inherit;
+
+}
+.tree-section{
+
+    padding-bottom:12px;
+
+    margin-bottom:14px;
+
+    border-bottom:1px solid #E8EDF3;
+
+}
+.tree-title{
+
+    font-size:14px;
+
+    font-weight:700;
+
+    color:#0B4F8A;
+
+    text-transform:uppercase;
+
+    letter-spacing:.6px;
+
+    margin-bottom:10px;
+
+}
+.opacity-label{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    font-size:13px;
+
+    margin-top:6px;
+
+}
+#opacity-slider{
+
+    width:100%;
+
+}
+/* ==========================================================
+   LOADING SCREEN
+========================================================== */
+
+#loading-screen{
+
+    position:fixed;
+
+    inset:0;
+
+    background:#ffffff;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    z-index:999999;
+
+    transition:.8s;
+
+}
+
+.loading-box{
+
+    text-align:center;
+
+    width:340px;
+
+}
+
+.loading-logo{
+
+    width:85px;
+
+    margin-bottom:18px;
+
+}
+
+.loading-box h1{
+
+    color:var(--primary);
+
+    margin-bottom:10px;
+
+    font-size:34px;
+
+}
+
+.loading-box p{
+
+    color:#6b7280;
+
+    line-height:1.6;
+
+    margin-bottom:22px;
+
+}
+
+.loading-text{
+
+    color:#374151;
+
+    margin-bottom:12px;
+
+    font-size:14px;
+
+}
+
+.loading-bar{
+
+    width:100%;
+
+    height:8px;
+
+    background:#e5e7eb;
+
+    border-radius:20px;
+
+    overflow:hidden;
+
+}
+
+.loading-progress{
+
+    width:0%;
+
+    height:100%;
+
+    background:var(--primary);
+
+    animation:loadingBar 2.5s linear forwards;
+
+}
+
+.loading-box small{
+
+    display:block;
+
+    margin-top:18px;
+
+    color:#9ca3af;
+
+}
+
+@keyframes loadingBar{
+
+    from{
+
+        width:0%;
+
+    }
+
+    to{
+
+        width:100%;
+
+    }
+
+}
+/* ==========================================
+   STATUS BAR NUMBER
+========================================== */
+
+.status-number{
+
+    color:var(--primary);
+
+    font-weight:700;
+
+    margin:0 2px;
+
+}
